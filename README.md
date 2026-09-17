@@ -1,4 +1,4 @@
-# Embacolsa - Aplicación Web y Landing Page
+# SOFTNOVA - Aplicación Web y Landing Page
 
 Proyecto desacoplado en dos servidores independientes: **Frontend (Nuxt.js / Vue.js)** y **Backend (Laravel / PHP)**.
 
@@ -21,7 +21,7 @@ Proyecto desacoplado en dos servidores independientes: **Frontend (Nuxt.js / Vue
 ## 📁 Estructura del Repositorio
 
 ```
-EmbacolsaLanding/
+softnova/
 ├── apps/
 │   ├── backend/     # API REST en Laravel 10 (PHP 8.2+)
 │   └── frontend/    # Aplicación SPA / Nuxt 2 (Vue 2 / Vuetify)
