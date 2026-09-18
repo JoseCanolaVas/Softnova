@@ -55,10 +55,10 @@ export default {
         return {
             moduloActivo: 'Entradas',
             resumenInventario: {
-                totalEntradas: 145,
-                totalSalidas: 320,
-                totalAjustes: 12,
-                totalTraslados: 8
+                totalEntradas: null,
+                totalSalidas: null,
+                totalAjustes: null,
+                totalTraslados: null
             }
         }
     },
