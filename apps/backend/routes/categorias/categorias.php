@@ -7,7 +7,7 @@ Route::prefix('categorias')->group(function () {
     Route::controller(CategoriaController::class)->group(function () {
         Route::get('/listar', 'listarCategorias');
         Route::post('/crear', 'crearCategoria');
-        Route::put('/actualizar', 'actualizarCategoria');
-        Route::delete('/eliminar', 'eliminarCategoria');
+        Route::put('/actualizar/{id}', 'actualizarCategoria');
+        Route::delete('/eliminar/{id}', 'eliminarCategoria');
     });
 });
