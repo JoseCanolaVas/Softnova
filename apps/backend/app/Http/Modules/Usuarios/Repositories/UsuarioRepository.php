@@ -23,7 +23,7 @@ class UsuarioRepository
                     'nombre' => $rol->display_name ?: $rol->name,
                     'slug' => $rol->name,
                 ])->values());
-                $usuario->setAttribute('permisos', $usuario->permisosDisponibles());
+                $usuario->setAttribute('permisos',$usuario->getAllPermissions()->pluck('name'));
 
                 return $usuario;
             });
