@@ -1,6 +1,20 @@
 <template>
-    <v-card flat class="mb-4">
-        <v-card-title>
+    <div flat class="mb-4">
+        <div class="page-heading">
+            <div>
+                <span>SOFTNOVA</span>
+                <h2>Productos</h2>
+                <p>
+                    Panel de parametrizacion de productos, desde acá se gestiona la información visible en el catálogo.
+                </p>
+            </div>
+
+            <v-btn v-if="$can('productos.crear')" color="primary" rounded depressed @click="abrirModalProducto()">
+                <v-icon left>mdi-plus</v-icon>
+                Crear producto
+            </v-btn>
+        </div>
+        <!-- <v-card-title>
             <v-toolbar flat>
                 <v-toolbar-title>
                     <div class="d-flex align-center">
@@ -12,169 +26,168 @@
                 </v-toolbar-title>
                 <v-divider class="mx-4" inset vertical></v-divider>
             </v-toolbar>
-        </v-card-title>
+        </v-card-title> -->
 
-        <v-card-subtitle class="mb-4 mt-5" align="center">
-            <h3><b class="justify-center"> <v-icon>mdi-information-slab-circle-outline</v-icon> Panel de parametrizacion
-                    de
-                    productos, desde acá se gestiona la información visible en el catálogo.</b></h3>
-        </v-card-subtitle>
+        <v-card class="mt-5">
+            <v-card-text> 
+                <v-row align="center" >
 
-        <v-card-text>
-            <v-row align="center">
+                    <v-col cols="12" md="2">
+                        <v-text-field v-model="filtros.id" label="ID" outlined dense rounded clearable
+                            @keyup.enter="filtrarProductos" @click:clear="filtrarProductos" />
+                    </v-col>
 
-                <v-col cols="12" md="2">
-                    <v-text-field v-model="filtros.id" label="ID" outlined dense rounded clearable
-                        @keyup.enter="filtrarProductos" @click:clear="filtrarProductos" />
-                </v-col>
+                    <v-col cols="12" md="3">
+                        <v-text-field v-model="buscar" label="Buscar" prepend-inner-icon="mdi-magnify" outlined dense
+                            rounded clearable @keyup.enter="filtrarProductos" @click:clear="filtrarProductos" />
+                    </v-col>
 
-                <v-col cols="12" md="3">
-                    <v-text-field v-model="buscar" label="Buscar" prepend-inner-icon="mdi-magnify" outlined dense
-                        rounded clearable @keyup.enter="filtrarProductos" @click:clear="filtrarProductos" />
-                </v-col>
+                    <v-col cols="12" md="3">
+                        <v-autocomplete v-model="filtros.categoria" :items="categorias" label="Categoría" outlined dense
+                            item-text="nombre" item-value="id" clearable rounded @change="filtrarProductos" />
+                    </v-col>
 
-                <v-col cols="12" md="3">
-                    <v-autocomplete v-model="filtros.categoria" :items="categorias" label="Categoría" outlined dense
-                        item-text="nombre" item-value="id" clearable rounded @change="filtrarProductos" />
-                </v-col>
+                    <v-col cols="12" md="2">
+                        <v-autocomplete v-model="filtros.marca" :items="marcas" label="Marca" outlined dense
+                            item-text="nombre" item-value="id" clearable rounded @change="filtrarProductos" />
+                    </v-col>
 
-                <v-col cols="12" md="2">
-                    <v-autocomplete v-model="filtros.marca" :items="marcas" label="Marca" outlined dense
-                        item-text="nombre" item-value="id" clearable rounded @change="filtrarProductos" />
-                </v-col>
+                    <v-col cols="12" md="2">
+                        <v-autocomplete v-model="filtros.bodega" :items="bodegas" label="Bodega" outlined dense
+                            item-text="nombre" item-value="id" clearable rounded @change="filtrarProductos" />
+                    </v-col>
 
-                <v-col cols="12" md="2">
-                    <v-autocomplete v-model="filtros.bodega" :items="bodegas" label="Bodega" outlined dense
-                        item-text="nombre" item-value="id" clearable rounded @change="filtrarProductos" />
-                </v-col>
+                    <v-col cols="12" md="2">
+                        <v-select v-model="filtros.stock" :items="opcionesStock" label="Stock" outlined dense rounded
+                            clearable @change="filtrarProductos" />
+                    </v-col>
 
-                <v-col cols="12" md="2">
-                    <v-select v-model="filtros.stock" :items="opcionesStock" label="Stock" outlined dense rounded
-                        clearable @change="filtrarProductos" />
-                </v-col>
+                    <v-col cols="12" md="2">
+                        <v-select v-model="filtros.estado" :items="estados" label="Estado" outlined dense rounded
+                            clearable @change="filtrarProductos" />
+                    </v-col>
 
-                <v-col cols="12" md="2">
-                    <v-select v-model="filtros.estado" :items="estados" label="Estado" outlined dense rounded
-                        clearable @change="filtrarProductos" />
-                </v-col>
+                    <!-- Botones -->
 
-                <!-- Botones -->
+                    <v-card-actions class="mb-4">
+                        <v-spacer></v-spacer>
+                        <v-btn @click="filtrarProductos()" rounded color="info">
+                            filtrar <v-icon right>mdi-magnify</v-icon>
+                        </v-btn>
+                        <v-btn @click="limpiarFiltros()" color="error" rounded>
+                            Limpiar filtros <v-icon right>mdi-broom</v-icon>
+                        </v-btn>
+                        <v-btn v-if="$can('productos.crear')" @click="abrirModalProducto()" rounded color="primary">
+                            Crear <v-icon right>mdi-plus</v-icon>
+                        </v-btn>
+                    </v-card-actions>
 
-                <v-card-actions class="mb-4">
-                    <v-spacer></v-spacer>
-                    <v-btn @click="filtrarProductos()" rounded color="info">
-                        filtrar <v-icon right>mdi-magnify</v-icon>
-                    </v-btn>
-                    <v-btn @click="limpiarFiltros()" color="error" rounded>
-                        Limpiar filtros <v-icon right>mdi-broom</v-icon>
-                    </v-btn>
-                    <v-btn v-if="$can('productos.crear')" @click="abrirModalProducto()" rounded color="primary">
-                        Crear <v-icon right>mdi-plus</v-icon>
-                    </v-btn>
-                </v-card-actions>
+                </v-row>
+            </v-card-text>
 
-            </v-row>
-        </v-card-text>
+            <v-card-text class="mt-5">
 
-        <v-card-text class="mt-5">
+                <v-data-table :headers="headersProductos" :items="productos" :loading="loading.productos"
+                    disable-pagination hide-default-footer>
+                    <template v-slot:item.ruta_imagen="{ item }">
+                        <v-avatar tile size="52" class="producto-avatar">
+                            <v-img v-if="resolverImagen(item.ruta_imagen)" :src="resolverImagen(item.ruta_imagen)"
+                                contain />
+                            <v-icon v-else color="grey lighten-1">
+                                mdi-image-off-outline
+                            </v-icon>
+                        </v-avatar>
+                    </template>
 
-            <v-data-table :headers="headersProductos" :items="productos" :loading="loading.productos"
-                disable-pagination hide-default-footer>
-                <template v-slot:item.ruta_imagen="{ item }">
-                    <v-avatar tile size="52" class="producto-avatar">
-                        <v-img v-if="resolverImagen(item.ruta_imagen)" :src="resolverImagen(item.ruta_imagen)" contain />
-                        <v-icon v-else color="grey lighten-1">
-                            mdi-image-off-outline
-                        </v-icon>
-                    </v-avatar>
-                </template>
+                    <template v-slot:item.categoria="{ item }">
+                        {{ item.categoria?.nombre || 'Sin categoria' }}
+                    </template>
 
-                <template v-slot:item.categoria="{ item }">
-                    {{ item.categoria?.nombre || 'Sin categoria' }}
-                </template>
+                    <template v-slot:item.marca="{ item }">
+                        {{ item.marca?.nombre || 'Sin marca' }}
+                    </template>
 
-                <template v-slot:item.marca="{ item }">
-                    {{ item.marca?.nombre || 'Sin marca' }}
-                </template>
+                    <template v-slot:item.bodega="{ item }">
+                        {{ item.bodega?.nombre || 'Sin bodega' }}
+                    </template>
 
-                <template v-slot:item.bodega="{ item }">
-                    {{ item.bodega?.nombre || 'Sin bodega' }}
-                </template>
+                    <template v-slot:item.precio="{ item }">
+                        {{ formatearPrecio(item.precio) }}
+                    </template>
 
-                <template v-slot:item.precio="{ item }">
-                    {{ formatearPrecio(item.precio) }}
-                </template>
+                    <template v-slot:item.stock="{ item }">
+                        <v-chip small :color="Number(item.stock || 0) > 0 ? 'success' : 'error'" dark>
+                            <v-icon left small>
+                                {{ Number(item.stock || 0) > 0 ? 'mdi-package-check' : 'mdi-package-variant-remove' }}
+                            </v-icon>
+                            {{ Number(item.stock || 0) }} und
+                        </v-chip>
+                    </template>
 
-                <template v-slot:item.stock="{ item }">
-                    <v-chip small :color="Number(item.stock || 0) > 0 ? 'success' : 'error'" dark>
-                        <v-icon left small>
-                            {{ Number(item.stock || 0) > 0 ? 'mdi-package-check' : 'mdi-package-variant-remove' }}
-                        </v-icon>
-                        {{ Number(item.stock || 0) }} und
-                    </v-chip>
-                </template>
+                    <template v-slot:item.estado="{ item }">
+                        <v-chip small :color="productoActivo(item.estado) ? 'primary' : 'grey'" dark>
+                            {{ productoActivo(item.estado) ? 'Activo' : 'Inactivo' }}
+                        </v-chip>
+                    </template>
 
-                <template v-slot:item.estado="{ item }">
-                    <v-chip small :color="productoActivo(item.estado) ? 'primary' : 'grey'" dark>
-                        {{ productoActivo(item.estado) ? 'Activo' : 'Inactivo' }}
-                    </v-chip>
-                </template>
+                    <template v-slot:item.acciones="{ item }">
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn icon color="info" v-bind="attrs" v-on="on"
+                                    @click="abrirModalDetalleProducto(item)">
+                                    <v-icon>
+                                        mdi-eye-outline
+                                    </v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Ver detalle</span>
+                        </v-tooltip>
 
-                <template v-slot:item.acciones="{ item }">
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn icon color="info" v-bind="attrs" v-on="on" @click="abrirModalDetalleProducto(item)">
-                                <v-icon>
-                                    mdi-eye-outline
-                                </v-icon>
-                            </v-btn>
-                        </template>
-                        <span>Ver detalle</span>
-                    </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn v-if="$can('productos.editar')" icon color="primary" v-bind="attrs" v-on="on"
+                                    @click="abrirModalProducto(item)">
+                                    <v-icon>
+                                        mdi-pencil-outline
+                                    </v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Editar producto</span>
+                        </v-tooltip>
+                    </template>
 
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn v-if="$can('productos.editar')" icon color="primary" v-bind="attrs" v-on="on" @click="abrirModalProducto(item)">
-                                <v-icon>
-                                    mdi-pencil-outline
-                                </v-icon>
-                            </v-btn>
-                        </template>
-                        <span>Editar producto</span>
-                    </v-tooltip>
-                </template>
+                </v-data-table>
 
-            </v-data-table>
+            </v-card-text>
 
-        </v-card-text>
+            <v-card-actions>
 
-        <v-card-actions>
+                <v-row>
+                    <v-col cols="12" sm="11" md="11">
+                        <v-pagination v-model="paginacion.pagina" :length="paginacion.total" :total-visible="9"
+                            @input="listarProductos()">
+                        </v-pagination>
+                    </v-col>
 
-            <v-row>
-                <v-col cols="12" sm="11" md="11">
-                    <v-pagination v-model="paginacion.pagina" :length="paginacion.total" :total-visible="9"
-                        @input="listarProductos()">
-                    </v-pagination>
-                </v-col>
+                    <v-col cols="12" sm="1" md="1">
+                        <v-select dense outlined v-model="paginacion.cantidadRegistros" :items="[5, 10, 20, 50, 100]"
+                            label="Registros por Página" @change="listarProductos()"></v-select>
+                    </v-col>
+                </v-row>
 
-                <v-col cols="12" sm="1" md="1">
-                    <v-select dense outlined v-model="paginacion.cantidadRegistros" :items="[5, 10, 20, 50, 100]"
-                        label="Registros por Página" @change="listarProductos()"></v-select>
-                </v-col>
-            </v-row>
+            </v-card-actions>
 
-        </v-card-actions>
+            <v-dialog v-model="modalProducto" max-width="600px">
+                <ModalProductos :productoSeleccionado="productoSeleccionado" @cerrar="modalProducto = false"
+                    @producto-guardado="listarProductos" />
+            </v-dialog>
 
-        <v-dialog v-model="modalProducto" max-width="600px">
-            <ModalProductos :productoSeleccionado="productoSeleccionado" @cerrar="modalProducto = false"
-                @producto-guardado="listarProductos" />
-        </v-dialog>
-
-        <v-dialog v-model="modalDetalleProducto" max-width="760px">
-            <ModalDetalleProductos :productoSeleccionado="productoSeleccionado" @cerrar="modalDetalleProducto = false" />
-        </v-dialog>
-
-    </v-card>
+            <v-dialog v-model="modalDetalleProducto" max-width="760px">
+                <ModalDetalleProductos :productoSeleccionado="productoSeleccionado"
+                    @cerrar="modalDetalleProducto = false" />
+            </v-dialog>
+        </v-card>
+    </div>
 </template>
 
 <script>
@@ -382,10 +395,97 @@ export default {
 };
 </script>
 
+
 <style scoped>
-.producto-avatar {
-    background: #f5f7fb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+.page-heading,
+.panel-card {
+    border-radius: 16px !important;
+}
+
+.page-heading {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #dfe8f0;
+    display: flex;
+    gap: 18px;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding: 24px;
+}
+
+.page-heading span {
+    color: #0d7880;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.page-heading h2 {
+    color: #14325f;
+    font-size: 28px;
+    font-weight: 950;
+    margin: 4px 0;
+}
+
+.page-heading p {
+    color: #65758d;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.panel-card {
+    border-color: #dfe8f0 !important;
+    overflow: hidden;
+}
+
+.panel-card-title {
+    align-items: center;
+    gap: 14px;
+    padding: 22px 24px;
+}
+
+.panel-title-icon {
+    align-items: center;
+    background: #eef6ff;
+    border-radius: 14px;
+    display: flex;
+    height: 46px;
+    justify-content: center;
+    width: 46px;
+}
+
+.panel-card-title strong {
+    color: #243b53;
+    display: block;
+    font-size: 19px;
+}
+
+.panel-card-title p {
+    color: #65758d;
+    font-size: 13px;
+    margin: 2px 0 0;
+}
+
+.panel-search {
+    max-width: 360px;
+}
+
+.panel-table {
+    border-top: 1px solid #e6edf5;
+}
+
+@media (max-width: 760px) {
+
+    .page-heading,
+    .panel-card-title {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .panel-search {
+        max-width: 100%;
+        width: 100%;
+    }
 }
 </style>

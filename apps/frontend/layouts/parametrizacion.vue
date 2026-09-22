@@ -23,8 +23,8 @@
       </v-btn>
 
       <div class="topbar-title">
-        <span>Parametrización</span>
-        <small>Gestión de contenido y catálogo</small>
+        <span>GESTV1 - 2026</span>
+        <small>Chocolatinazo</small>
       </div>
 
       <v-spacer />
