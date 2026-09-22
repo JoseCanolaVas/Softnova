@@ -12,16 +12,16 @@
                             <v-icon size="19" color="#67f0ea" class="mr-2">
                                 mdi-shield-check-outline
                             </v-icon>
-                            Plataforma comercial NovaCell
+                            Plataforma comercial 
                         </div>
 
                         <h1 class="brand-title">
-                            Celulares, accesorios y tecnología listos para vender.
+                            Centro de administracion de Chocolatinazo 
                         </h1>
 
                         <p class="brand-copy">
-                            Administra forros, cables, audífonos, vidrios templados,
-                            soportes y cargadores desde un panel listo para vender.
+                            Administra y gestiona tu negocio a medida 
+                            y optimiza tus procesos.
                         </p>
 
                         <div class="brand-actions">
@@ -29,19 +29,19 @@
                                 <v-icon size="20" color="#1e88e5">
                                     mdi-cellphone-link
                                 </v-icon>
-                                Catálogo dinámico
+                                Modulo POS
                             </div>
 
                             <div class="brand-pill">
                                 <v-icon size="20" color="#00a884">
                                     mdi-account-cog-outline
                                 </v-icon>
-                                Gestión por usuarios
+                                Gestión de negocio
                             </div>
                         </div>
 
                         <div class="brand-visual">
-                            <img src="/images/hero-products-optimized.webp" alt="Accesorios NovaCell" />
+                            <img src="/images/softnova.png" alt="Softnova" />
                         </div>
                     </section>
                 </v-col>
@@ -50,15 +50,16 @@
                     <v-card class="login-card" elevation="0">
                         <v-card-text class="login-content">
                             <div class="login-header">
-                                <img src="/images/novacell.png" alt="Logo NovaCell" class="login-logo" />
+                                <img src="/images/softnovaNegro.png" alt="Logo Softnova" class="login-logo mt-5" />
 
                                 <!-- <div class="login-access-chip">
                                     Acceso seguro
                                 </div> -->
+                                <v-divider class="my-4"></v-divider>
 
-                                <h2 class="login-title mt-2">
+                                <h3 class="login-title ">
                                     Iniciar sesión
-                                </h2>
+                                </h3>
 
                                 <p class="login-subtitle mb-0">
                                     Ingresa tus credenciales para entrar al módulo de
