@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { modules } from '~/config/server-profile'
 export default {
     name: 'Sidebar',
 
@@ -100,7 +101,7 @@ export default {
 
     computed: {
         menuFiltrado() {
-            return this.menu.filter(item => !item.permiso || this.$can(item.permiso))
+            return this.menu.filter(item => modules.some(module => module.path === item.route) && this.$can(item.permiso))
         },
     },
 }

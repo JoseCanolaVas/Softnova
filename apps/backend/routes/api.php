@@ -20,15 +20,17 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-require __DIR__ . '/usuarios/usuarios.php';
 require __DIR__ . '/auth/auth.php';
-require __DIR__ . '/categorias/categorias.php';
-require __DIR__ . '/productos/productos.php';
-require __DIR__ . '/tipoImagenes/tipoImagenes.php';
-require __DIR__ . '/imagenes/imagenes.php';
-require __DIR__ . '/marcas/marcas.php';
-require __DIR__ . '/bodegas/bodegas.php';
-require __DIR__ . '/ventas/ventas.php';
-require __DIR__ . '/sitioPublico/sitioPublico.php';
-require __DIR__ . '/roles/roles.php';
-require __DIR__ . '/permisos/permisos.php';
+Route::middleware('auth:api')->group(function () {
+    require __DIR__ . '/usuarios/usuarios.php';
+    require __DIR__ . '/categorias/categorias.php';
+    require __DIR__ . '/productos/productos.php';
+    require __DIR__ . '/tipoImagenes/tipoImagenes.php';
+    require __DIR__ . '/imagenes/imagenes.php';
+    require __DIR__ . '/marcas/marcas.php';
+    require __DIR__ . '/bodegas/bodegas.php';
+    require __DIR__ . '/ventas/ventas.php';
+    require __DIR__ . '/sitioPublico/sitioPublico.php';
+    require __DIR__ . '/roles/roles.php';
+    require __DIR__ . '/permisos/permisos.php';
+});

@@ -374,7 +374,7 @@ export default {
                 nombre: '',
                 slug: '',
                 descripcion: '',
-                permisos: ['panel.ver'],
+                permisos: [],
                 estado: true,
             }
         },

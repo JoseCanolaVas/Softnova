@@ -22,7 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Passport::loadKeysFrom(storage_path('oauth-keys'));
+        Passport::loadKeysFrom(storage_path());
 
         Gate::before(function ($user) {
             return $user->es_super_admin ? true : null;

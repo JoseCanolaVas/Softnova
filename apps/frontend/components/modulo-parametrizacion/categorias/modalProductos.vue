@@ -34,8 +34,7 @@
 
                     <v-col cols="12" md="6">
                         <v-select v-model="form.categoria_id" :items="categorias" item-text="nombre" item-value="id" :loading="loading.categorias"
-                            label="Categoría" prepend-inner-icon="mdi-format-list-bulleted-type" outlined rounded dense
-                            :rules="[rules.requerido]" />
+                            label="Categoría (opcional)" prepend-inner-icon="mdi-format-list-bulleted-type" outlined rounded dense clearable />
                     </v-col>
 
                     <v-col cols="12" md="6">
@@ -386,7 +385,7 @@ export default {
                 formData.append('nombre', this.form.nombre)
                 formData.append('descripcion', this.form.descripcion)
                 formData.append('unidad_medida', this.form.unidad_medida)
-                formData.append('categoria_id', this.form.categoria_id)
+                formData.append('categoria_id', this.form.categoria_id || '')
 
                 formData.append('estado', this.form.estado ? '1' : '0')
 

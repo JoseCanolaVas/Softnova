@@ -1,3 +1,5 @@
+import { enabledPermission } from '~/config/server-profile'
+
 export default function (_context, inject) {
     const permisosSistema = [
         { label: 'Ver panel', value: 'panel.ver' },
@@ -44,6 +46,7 @@ export default function (_context, inject) {
     }
 
     const can = (permiso) => {
+        if (!enabledPermission(permiso)) return false
         const usuario = obtenerUsuario()
 
         if (!usuario) {
@@ -59,5 +62,5 @@ export default function (_context, inject) {
 
     inject('currentUser', obtenerUsuario)
     inject('can', can)
-    inject('permissionsCatalog', permisosSistema)
+    inject('permissionsCatalog', permisosSistema.filter(item => enabledPermission(item.value)))
 }

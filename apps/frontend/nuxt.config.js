@@ -1,3 +1,4 @@
+import { modules as serverModules } from './config/server-profile'
 import colors from 'vuetify/es5/util/colors'
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -95,6 +96,13 @@ export default {
     router: {
         middleware: ['auth'],
         prefetchLinks: false,
+        extendRoutes(routes, resolve) {
+            const allowed = new Set(['/login', ...serverModules.map(item => item.path)])
+            const enabled = routes.filter(route => allowed.has(route.path))
+            routes.splice(0, routes.length, ...enabled,
+                { path: '/', redirect: '/login' },
+                { path: '/modulo-parametrizacion', redirect: '/modulo-parametrizacion/productos' })
+        },
     },
 
     vuetify: {

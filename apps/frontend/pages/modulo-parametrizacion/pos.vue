@@ -12,9 +12,9 @@
                 </v-toolbar-title>
                 <v-divider class="mx-4" inset vertical></v-divider>
                 <v-spacer />
-                <v-btn color="primary" rounded outlined to="/modulo-parametrizacion">
+                <v-btn color="primary" rounded outlined to="/modulo-parametrizacion/productos">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    Panel
+                    Parametrización
                 </v-btn>
                 <v-btn color="success" rounded depressed class="ml-2" to="/modulo-parametrizacion/ventas">
                     <v-icon left>mdi-chart-line</v-icon>

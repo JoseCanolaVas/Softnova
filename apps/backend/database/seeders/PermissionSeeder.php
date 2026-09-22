@@ -61,13 +61,9 @@ class PermissionSeeder extends Seeder
             'estado' => true,
         ])->save();
         $editor->syncPermissions([
-            'panel.ver',
             'productos.ver',
             'productos.crear',
             'productos.editar',
-            'categorias.ver',
-            'categorias.crear',
-            'categorias.editar',
             'marcas.ver',
             'marcas.crear',
             'marcas.editar',

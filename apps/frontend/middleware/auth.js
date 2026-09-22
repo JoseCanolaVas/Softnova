@@ -1,60 +1,25 @@
-export default function ({ route, redirect }) {
-  if (!process.client) {
-    return
-  }
+import { modules, canVisit } from '~/config/server-profile'
 
+export default async function ({ route, redirect, error, $axios }) {
+  if (!process.client) return
+  const path = route.path.replace(/\/+$/, '') || '/'
   const token = sessionStorage.getItem('softnova_token')
-  const rutaNormalizada = route.path.replace(/\/+$/, '') || '/'
-
-  if (rutaNormalizada === '/login' && token) {
-    return redirect('/modulo-parametrizacion')
-  }
-
-  const esRutaPublica =
-    rutaNormalizada === '/' ||
-    rutaNormalizada === '/login' ||
-    rutaNormalizada.startsWith('/catalogo')
-
-  if (esRutaPublica) {
-    return
-  }
-
-  if (!token) {
-    return redirect('/login')
-  }
-
-  const permisosPorRuta = [
-    { prefijo: '/modulo-parametrizacion/productos', permiso: 'productos.ver' },
-    { prefijo: '/modulo-parametrizacion/categorias', permiso: 'categorias.ver' },
-    { prefijo: '/modulo-parametrizacion/marcas', permiso: 'marcas.ver' },
-    { prefijo: '/modulo-parametrizacion/bodegas', permiso: 'bodegas.ver' },
-    { prefijo: '/modulo-parametrizacion/pos', permiso: 'ventas.ver' },
-    { prefijo: '/modulo-parametrizacion/ventas', permiso: 'ventas.ver' },
-    { prefijo: '/modulo-parametrizacion/imagenes', permiso: 'imagenes.ver' },
-    { prefijo: '/modulo-parametrizacion/usuarios', permiso: 'usuarios.ver' },
-    { prefijo: '/modulo-parametrizacion/roles', permiso: 'roles.ver' },
-    { prefijo: '/modulo-parametrizacion/sitio-publico', permiso: 'administrar-sitio' },
-  ]
-
-  const regla = permisosPorRuta.find(item => rutaNormalizada.startsWith(item.prefijo))
-
-  if (!regla) {
-    return
-  }
-
+  if (!token) return path === '/login' ? undefined : redirect('/login')
+  let user
   try {
-    const usuario = JSON.parse(sessionStorage.getItem('softnova_user') || '{}')
-
-    if (usuario.es_super_admin) {
-      return
+    const response = await $axios.$get('/auth/me')
+    user = response.user
+    sessionStorage.setItem('softnova_user', JSON.stringify(user))
+  } catch (failure) {
+    if (failure.response && failure.response.status === 401) {
+      sessionStorage.removeItem('softnova_token')
+      sessionStorage.removeItem('softnova_user')
+      return path === '/login' ? undefined : redirect('/login')
     }
-
-    if (Array.isArray(usuario.permisos) && usuario.permisos.includes(regla.permiso)) {
-      return
-    }
-  } catch (error) {
-    // Si el usuario local está corrupto, lo devolvemos al panel.
+    return error({ statusCode: 503, message: 'No se pudo verificar la sesión. Intenta nuevamente.' })
   }
-
-  return redirect('/modulo-parametrizacion')
+  const first = modules.find(item => canVisit(user, item))
+  if (!first) return error({ statusCode: 403, message: 'Tu cuenta no tiene acceso a Parametrización.' })
+  const current = modules.find(item => item.path === path)
+  if (!current || !canVisit(user, current)) return redirect(first.path)
 }

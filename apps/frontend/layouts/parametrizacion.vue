@@ -23,7 +23,7 @@
       </v-btn>
 
       <div class="topbar-title">
-        <span>Panel de parametrización</span>
+        <span>Parametrización</span>
         <small>Gestión de contenido y catálogo</small>
       </div>
 
@@ -38,12 +38,7 @@
         </div>
       </div>
 
-      <v-btn rounded outlined color="primary" small to="/" class="ml-2">
-        <v-icon left small>mdi-web</v-icon>
-        Sitio público
-      </v-btn>
-
-      <v-btn rounded color="error" small class="ml-2" @click="cerrarSesion">
+<v-btn rounded color="error" small class="ml-2" @click="cerrarSesion">
         <v-icon small>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
@@ -116,7 +111,8 @@ export default {
       this.usuario = JSON.parse(sessionStorage.getItem('softnova_user') || null)
     },
 
-    cerrarSesion() {
+    async cerrarSesion() {
+      try { await this.$axios.post('/auth/logout') } catch (_) { /* Limpiar también una sesión vencida. */ }
       if (process.client) {
         sessionStorage.removeItem('softnova_token')
         sessionStorage.removeItem('softnova_user')
@@ -125,7 +121,7 @@ export default {
         }
       }
 
-      this.$router.push('/')
+      this.$router.push('/login')
     },
   },
 }

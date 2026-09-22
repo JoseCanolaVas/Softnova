@@ -28,7 +28,7 @@ class CrearProductoRequest extends FormRequest
             'estado' => ['required', 'boolean'],
             'precio' => ['nullable', 'numeric', 'min:0'],
             'stock' => ['nullable', 'integer', 'min:0'],
-            'categoria_id' => ['required', 'exists:categorias,id'],
+            'categoria_id' => ['nullable', 'exists:categorias,id'],
             'marca_id' => ['nullable', 'exists:marcas,id'],
             'bodega_id' => ['nullable', 'exists:bodegas,id'],
             'imagen' => ['required', 'image', 'max:20480'],

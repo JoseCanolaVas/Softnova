@@ -9,13 +9,9 @@ class PermissionCatalog
     public static function permisos(): array
     {
         return [
-            ['value' => 'panel.ver', 'label' => 'Ver panel', 'grupo' => 'Panel'],
             ['value' => 'productos.ver', 'label' => 'Ver productos', 'grupo' => 'Productos'],
             ['value' => 'productos.crear', 'label' => 'Crear productos', 'grupo' => 'Productos'],
             ['value' => 'productos.editar', 'label' => 'Editar productos', 'grupo' => 'Productos'],
-            ['value' => 'categorias.ver', 'label' => 'Ver categorías', 'grupo' => 'Categorías'],
-            ['value' => 'categorias.crear', 'label' => 'Crear categorías', 'grupo' => 'Categorías'],
-            ['value' => 'categorias.editar', 'label' => 'Editar categorías', 'grupo' => 'Categorías'],
             ['value' => 'marcas.ver', 'label' => 'Ver marcas', 'grupo' => 'Marcas'],
             ['value' => 'marcas.crear', 'label' => 'Crear marcas', 'grupo' => 'Marcas'],
             ['value' => 'marcas.editar', 'label' => 'Editar marcas', 'grupo' => 'Marcas'],

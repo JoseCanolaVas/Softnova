@@ -61,8 +61,8 @@
                                 </h2>
 
                                 <p class="login-subtitle mb-0">
-                                    Ingresa tus credenciales para entrar al panel de
-                                    parametrización y catálogo.
+                                    Ingresa tus credenciales para entrar al módulo de
+                                    Parametrización.
                                 </p>
                             </div>
 
@@ -89,7 +89,7 @@
                                     <v-col cols="12" class="pt-3">
                                         <v-btn type="submit" block x-large rounded :loading="cargando"
                                             :disabled="cargando" class="login-button text-none">
-                                            Entrar al panel
+                                            Entrar a Parametrización
                                             <v-icon right size="22">
                                                 mdi-arrow-right
                                             </v-icon>
@@ -285,7 +285,7 @@ export default {
                     JSON.stringify(response.data.user || {})
                 )
 
-                this.$router.push('/modulo-parametrizacion')
+                this.$router.push('/modulo-parametrizacion/productos')
 
                 this.$toast.success('¡Bienvenido!')
                 /*

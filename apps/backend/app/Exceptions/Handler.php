@@ -29,6 +29,11 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
+        $this->renderable(function (AuthenticationException $exception, $request) {
+            if ($this->esPeticionApi($request)) {
+                return response()->json(['success' => false, 'message' => 'No estás autenticado.'], 401);
+            }
+        });
         $this->reportable(function (Throwable $exception) {
             //
         });
