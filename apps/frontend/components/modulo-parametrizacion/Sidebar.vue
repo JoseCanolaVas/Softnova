@@ -68,7 +68,7 @@ export default {
                     title: 'Movimientos de Inventario',
                     icon: 'mdi-folder-open',
                     route: '/modulo-parametrizacion/inventario',
-                    permiso: 'ventas.ver', // cambiar
+                    permiso: 'inventario.ver', // cambiar
                 },
                 {
                     title: 'Sitio público',
@@ -101,7 +101,7 @@ export default {
 
     computed: {
         menuFiltrado() {
-            return this.menu.filter(item => modules.some(module => module.path === item.route) && this.$can(item.permiso))
+            return this.menu.filter(item => this.$can(item.permiso))
         },
     },
 }

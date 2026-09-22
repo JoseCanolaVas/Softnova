@@ -28,8 +28,9 @@
                     </v-col>
 
                     <v-col cols="12" md="6">
-                        <v-text-field v-model="form.password" :label="usuarioSeleccionado?.id ? 'Nueva contraseña' : 'Contraseña'"
-                            outlined dense rounded prepend-inner-icon="mdi-lock-outline"
+                        <v-text-field v-model="form.password"
+                            :label="usuarioSeleccionado?.id ? 'Nueva contraseña' : 'Contraseña'" outlined dense rounded
+                            prepend-inner-icon="mdi-lock-outline"
                             :append-icon="verPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
                             :type="verPassword ? 'text' : 'password'" :rules="passwordRules"
                             @click:append="verPassword = !verPassword" />
@@ -167,17 +168,7 @@ export default {
                 password: null,
                 es_super_admin: false,
                 rol: 'editor_catalogo',
-                permisos: [
-                    'panel.ver',
-                    'productos.ver',
-                    'categorias.ver',
-                    'marcas.ver',
-                    'bodegas.ver',
-                    'ventas.ver',
-                    'ventas.crear',
-                    'imagenes.ver',
-                    'administrar-sitio',
-                ],
+                permisos: [],
             }
         },
 

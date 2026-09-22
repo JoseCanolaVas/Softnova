@@ -121,9 +121,7 @@ export default {
     },
 
     homeTo() {
-      return this.isHome
-        ? { path: '/', hash: '#inicio' }
-        : { path: '/' }
+      return { path: '/' }
     },
 
     navigationLinks() {

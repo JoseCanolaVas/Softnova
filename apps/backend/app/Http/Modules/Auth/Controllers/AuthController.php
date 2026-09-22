@@ -30,11 +30,18 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
+        $user = $request->user();
+
         return response()->json([
             'success' => true,
             'user' => array_merge(
-                $request->user()->toArray(),
-                ['permisos' => $request->user()->permisosDisponibles()]
+                $user->toArray(),
+                [
+                    'roles' => $user->getRoleNames()->values(),
+                    'permisos' => $user->getAllPermissions()
+                        ->pluck('name')
+                        ->values(),
+                ]
             ),
         ]);
     }

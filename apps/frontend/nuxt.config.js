@@ -100,8 +100,7 @@ export default {
             const allowed = new Set(['/login', ...serverModules.map(item => item.path)])
             const enabled = routes.filter(route => allowed.has(route.path))
             routes.splice(0, routes.length, ...enabled,
-                { path: '/', redirect: '/login' },
-                { path: '/modulo-parametrizacion', redirect: '/modulo-parametrizacion/productos' })
+                { path: '/', redirect: '/login' },)
         },
     },
 

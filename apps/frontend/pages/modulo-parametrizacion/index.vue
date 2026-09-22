@@ -117,7 +117,7 @@ export default {
                     icon: 'mdi-format-list-bulleted-type',
                     color: 'teal',
                     route: '/modulo-parametrizacion/categorias',
-                    permiso: 'categorias.ver',
+                    permiso: 'productos.ver',
                 },
                 {
                     title: 'Marcas',
@@ -463,7 +463,7 @@ export default {
     padding: 14px 0;
 }
 
-.guide-step + .guide-step {
+.guide-step+.guide-step {
     border-top: 1px solid #e6edf5;
 }
 
