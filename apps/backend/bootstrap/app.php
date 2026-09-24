@@ -16,6 +16,21 @@ $app = new Illuminate\Foundation\Application(
 |--------------------------------------------------------------------------
 */
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Environment File
+|--------------------------------------------------------------------------
+|
+| Usamos el archivo centralizado:
+| EmbacolsaLanding/env/backend.env
+|
+*/
+
+$app->useEnvironmentPath(dirname(__DIR__, 3) . '/env');
+$app->loadEnvironmentFrom('backend.env');
+
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
     App\Http\Kernel::class
